@@ -1,0 +1,9 @@
+.todo__list {
+    max-width: 70%;
+    text-align: center;
+}
+
+.delete__icon {
+    cursor: pointer;
+}
+
