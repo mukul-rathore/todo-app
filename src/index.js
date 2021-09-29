@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider, useSelector } from 'react-redux';
+import { ReactReduxFirebaseProvider, getFirebase, isLoaded } from 'react-redux-firebase'
+import {store, rrfProps} from './store/store';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+          <App />
+      </ReactReduxFirebaseProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

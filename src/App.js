@@ -9,20 +9,28 @@ import SignIn from '../src/components/Auth/SignIn';
 import SignUp from '../src/components/Auth/SignUp';
 import {  Container } from 'react-bootstrap';
 
+import { store, rrfProps } from './store/store';
+import { Provider } from 'react-redux';
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-      <Container maxWidth="lg">
-        <TodoNavbar />
-        <Switch>
-          <Route path="/" exact component={AddTodo} />
-          <Route path="/signin" exact component={SignIn} />
-          <Route path="/signup" exact component={SignUp} />
-        </Switch>
-      </Container>
-    </BrowserRouter>
+      <Provider store={store}>
+        <ReactReduxFirebaseProvider {...rrfProps}>
+            <BrowserRouter>
+            <Container>
+              <TodoNavbar />
+              <Switch>
+                <Route path="/" exact component={AddTodo} />
+                <Route path="/signin" exact component={SignIn} />
+                <Route path="/signup" exact component={SignUp} />
+              </Switch>
+            </Container>
+          </BrowserRouter>
+        </ReactReduxFirebaseProvider>
+      </Provider>
     </div>
   );
 }

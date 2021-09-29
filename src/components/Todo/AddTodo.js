@@ -3,14 +3,19 @@ import db from '../../firebase';
 import firebase from 'firebase/compat/app';
 import { Form, Row, Col, Button, Container } from 'react-bootstrap';
 import Home from '../Home';
+import {getFirebase} from "react-redux-firebase"
+import { useFirestore } from 'react-redux-firebase';
 
 
 const AddTodo = () => {
     const [todos, setTodos] = useState([]);
     const [input, setInput] = useState('');
+    // const firestore = getFirebase().firestore();
+    const firestore = useFirestore();
+    const uid = "YNz3YsHViBVNCux6skYH";
 
     useEffect(() => {
-    db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+      firestore.collection('users').doc(uid).collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
         setTodos(snapshot.docs.map(doc => ({id : doc.id, todo : doc.data().todo})))
     })
     }, [])
@@ -18,7 +23,7 @@ const AddTodo = () => {
   const addTodo = (event) => {
     event.preventDefault();
     //adding to the db
-      db.collection('todos').add({
+      firestore.collection('users').doc(uid).collection('todos').add({
         todo : input,
         timestamp : firebase.firestore.FieldValue.serverTimestamp()
       })

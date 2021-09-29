@@ -4,8 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import db from '../../firebase';
-
+import {getFirebase} from 'react-redux-firebase';
 
 const style = {
     position: 'absolute',
@@ -20,16 +19,18 @@ const style = {
   };
   
 
-const Todo = (props) => {      
+const Todo = (props) => {   
     const [open, setOpen] = useState(false);
     const [input, setInput] = useState('');
+    const firestore = getFirebase().firestore();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const uid = "YNz3YsHViBVNCux6skYH";
     const updateTodo = (e) =>  {
         //update todo with the new input text
-        db.collection('todos').doc(props.todo.id).set({
+        firestore.collection('users').doc(uid).collection('todos').doc(props.todo.id).set({
             todo : input
         }, {merge : true})
         setOpen(false);
@@ -57,7 +58,7 @@ const Todo = (props) => {
                     <ListItemText primary={props.todo.todo} />
                 </ListItem>
                 <EditIcon onClick={handleOpen}>Edit</EditIcon>
-                <DeleteIcon className="delete__icon" onClick={(event) => {db.collection('todos').doc(props.todo.id).delete()}}>Delete</DeleteIcon>
+                <DeleteIcon className="delete__icon" onClick={(event) => {firestore.collection('users').doc(uid).collection('todos').doc(props.todo.id).delete()}}>Delete</DeleteIcon>
             </List>
         </>
      );

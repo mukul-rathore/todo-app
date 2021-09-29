@@ -4,7 +4,7 @@ import 'firebase/compat/auth'
 
 
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp({
+const firebaseConfig ={
   apiKey: "AIzaSyCa9LDJKRrbsT5iYCZnNU-1QUlll3L6FCA",
   authDomain: "todo-app-7d10c.firebaseapp.com",
   projectId: "todo-app-7d10c",
@@ -12,9 +12,9 @@ const firebaseApp = firebase.initializeApp({
   messagingSenderId: "1037129043134",
   appId: "1:1037129043134:web:49abd8262c6716389a62ef",
   measurementId: "G-DHQF3P7KTS"
-});
+};
 
+firebase.initializeApp(firebaseConfig);
+firebase.firestore().settings({timestampInSnapshots: true});
 
-const db = firebaseApp.firestore();
-
-export default db;
+export default firebase;
